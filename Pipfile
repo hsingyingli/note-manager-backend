@@ -10,6 +10,8 @@ fastapi = "*"
 [dev-packages]
 flake8 = "*"
 black = "*"
+pyright = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.9"
