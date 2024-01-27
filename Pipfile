@@ -4,8 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-uvicorn = "*"
-fastapi = "*"
+uvicorn = "0.27.0"
+fastapi = "0.109.0"
+bcrypt = "4.1.2"
+pydantic-settings = "2.1.0"
+alembic = "1.13.1"
+psycopg2 = "*"
+
 
 [dev-packages]
 flake8 = "*"
@@ -14,5 +19,5 @@ pyright = "*"
 pytest = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.9" 
 python_full_version = "3.9.17"
