@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -11,10 +13,17 @@ class Settings(BaseSettings):
     db_user: str = Field(alias="db_user", default="")
     db_password: str = Field(alias="db_password", default="")
     db_host: str = Field(alias="db_host", default="")
-    db_driver: str = Field(alias="db_driver", default="postgresql")
 
     # timezone
     timezone: str = Field(alias="timezone", default="")
+
+    # jwt
+    symmetric_key: str = Field(alias="symmetric_key")
+
+
+@lru_cache
+def get_settings() -> BaseSettings:
+    return Settings()
 
 
 if __name__ == "__main__":

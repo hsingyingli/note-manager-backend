@@ -8,21 +8,21 @@ dropdb:
 	docker exec -it postgres14 dropdb note
 
 migrateup:
-	migrate -path pkg/db/migration/ -database "postgresql://${DB_USERNAME}:${DB_PASSWORD}@${DB_URL}:5432/${DB_TABLE}?sslmode=disable" -verbose up
+	alembic upgrade +1
 
 migratedown:
-	migrate -path pkg/db/migration/ -database "postgresql://${DB_USERNAME}:${DB_PASSWORD}@${DB_URL}:5432/${DB_TABLE}?sslmode=disable" -verbose down
+	alembic downgrade -1
 
 new_migrate:
 	@read -p "Enter migration name: " name; \
-		migrate create -ext sql -dir pkg/db/migration -seq $$name
+		alembic revision -m $$name
 
-test:
-	go test -v -cover ./... 
+start_server:
+	uvicorn app:app --reload
 
 ssl:
 	@read -p "Enter length: " len;\
 		openssl rand -base64 $$len
 
 
-.PHONY:  migrateup, migratedown, new_migrate, ssl,
+.PHONY:  migrateup, migratedown, new_migrate, ssl, start_server

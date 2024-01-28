@@ -3,13 +3,12 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 
 from alembic import context
-from app.utils.database import get_database_dsn
+from config.database import DATABASE_DSN
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-db_dsn = get_database_dsn()
-config.set_main_option("sqlalchemy.url", db_dsn)
+config.set_main_option("sqlalchemy.url", DATABASE_DSN)
 
 
 # Interpret the config file for Python logging.
