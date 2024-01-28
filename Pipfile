@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+uvicorn = "*"
+fastapi = "*"
+bcrypt = "*"
+pydantic-settings = "*"
+alembic = "*"
+pytz = "*"
+pyjwt = "*"
+pydantic = {extras = ["email"]}
+psycopg = {extras = ["pool", "binary"]}
+returns = "*"
+
+[dev-packages]
+flake8 = "*"
+black = "*"
+pyright = "*"
+pytest = "*"
+
+[requires]
+python_version = "3.11" 
