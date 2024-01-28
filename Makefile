@@ -15,7 +15,7 @@ migratedown:
 
 new_migrate:
 	@read -p "Enter migration name: " name; \
-		alembic revision -m $$name
+		alembic revision -m "$$name"
 
 start_server:
 	uvicorn app:app --reload
