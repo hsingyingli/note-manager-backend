@@ -8,12 +8,12 @@ from config.setting import get_settings
 settings = get_settings()
 
 DATABASE_DSN = f"postgresql+psycopg://{settings.db_user}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_name}"
-CONNECTIONINFO = f"dbname={settings.db_name} user={settings.db_user} password={settings.db_password} host={settings.db_host} port={settings.db_port}"
+CONNECTION_INFO = f"dbname={settings.db_name} user={settings.db_user} password={settings.db_password} host={settings.db_host} port={settings.db_port}"
 
 
 @lru_cache
 def get_async_database_pool():
-    return AsyncConnectionPool(CONNECTIONINFO)
+    return AsyncConnectionPool(CONNECTION_INFO)
 
 
 async def check_async_database_pool() -> None:
