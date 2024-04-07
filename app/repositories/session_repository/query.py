@@ -43,7 +43,7 @@ async def get_session_by_id(cursor: AsyncCursor, param: GetSessionByIdParam) -> 
         get_session_by_id_query,
         list(param.model_dump().values()),
     )
-    result = cursor.fetchone()
+    result = await cursor.fetchone()
     if result is None:
         raise Exception("Session found")
 
