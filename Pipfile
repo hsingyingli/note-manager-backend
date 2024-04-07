@@ -13,7 +13,6 @@ pytz = "*"
 pyjwt = "*"
 pydantic = {extras = ["email"]}
 psycopg = {extras = ["pool", "binary"]}
-returns = "*"
 
 [dev-packages]
 flake8 = "*"
