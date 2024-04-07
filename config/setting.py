@@ -20,6 +20,12 @@ class Settings(BaseSettings):
     # jwt
     symmetric_key: str = Field(alias="symmetric_key")
 
+    # token
+    access_token_duration: int = Field(alias="access_token_duration", default=60 * 5)
+    refresh_token_duration: int = Field(
+        alias="refresh_token_duration", default=60 * 60 * 24 * 7
+    )
+
 
 @lru_cache
 def get_settings() -> BaseSettings:
