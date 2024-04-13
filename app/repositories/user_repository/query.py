@@ -34,5 +34,4 @@ async def get_user_by_email(cursor: AsyncCursor, param: GetUserByEmailParam) -> 
     result = await cursor.fetchone()
     if result is None:
         raise Exception("not found")
-
-    return User(id=result[0], password=result[1])
+    return User(id=result[0], username=result[1], email=result[2], password=result[3])

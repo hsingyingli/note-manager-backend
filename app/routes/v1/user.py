@@ -6,6 +6,8 @@ from psycopg.errors import UniqueViolation
 from psycopg_pool.pool_async import AsyncConnectionPool
 from pydantic import BaseModel, EmailStr, Field
 
+from app.dependences.authentication import get_user_from_token
+from app.models.user import User
 from app.repositories.session_repository.query import (CreateSessionParam,
                                                        ExpireSessionParam,
                                                        create_session,
@@ -24,8 +26,8 @@ user_router = APIRouter()
 
 
 @user_router.get("/")
-def get_user_route():
-    return {}
+def get_user_route(user: User = Depends(get_user_from_token)):
+    return {"user": user}
 
 
 @user_router.post("/", status_code=status.HTTP_201_CREATED)
@@ -105,9 +107,18 @@ async def login_user_route(
     response = JSONResponse(
         content={"msg": "succeeded"}, status_code=status.HTTP_200_OK
     )
-
-    response.set_cookie(key="note_app_access_token", value=access_token)
-    response.set_cookie(key="note_app_refresh_token", value=refresh_token)
+    response.set_cookie(
+        key="note_app_access_token",
+        value=access_token,
+        domain="127.0.0.1",
+        max_age=settings.access_token_duration,
+    )
+    response.set_cookie(
+        key="note_app_refresh_token",
+        value=refresh_token,
+        domain="127.0.0.1",
+        max_age=settings.refresh_token_duration,
+    )
 
     return response
 
@@ -134,6 +145,10 @@ async def logout_user(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
     response = Response(status_code=status.HTTP_204_NO_CONTENT)
-    response.set_cookie(key="note_app_access_token", value="", max_age=-1)
-    response.set_cookie(key="note_app_refresh_token", value="", max_age=-1)
+    response.set_cookie(
+        key="note_app_access_token", value="", max_age=-1, domain="127.0.0.1"
+    )
+    response.set_cookie(
+        key="note_app_refresh_token", value="", max_age=-1, domain="127.0.0.1"
+    )
     return response
