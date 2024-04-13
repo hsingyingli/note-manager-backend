@@ -1,4 +1,5 @@
 from collections import namedtuple
+from typing import Union
 
 Success = namedtuple(
     "Success",
@@ -14,7 +15,7 @@ Fail = namedtuple(
 
 
 def async_monadic(func):
-    async def wrap(*args, **kwargs):
+    async def wrap(*args, **kwargs) -> Union[Success, Fail]:
         try:
             result = await func(*args, **kwargs)
             if type(result) == Success or type(result) == Fail:
@@ -27,7 +28,7 @@ def async_monadic(func):
 
 
 def monadic(func):
-    def wrap(*args, **kwargs):
+    def wrap(*args, **kwargs) -> Union[Success, Fail]:
         try:
             result = func(*args, **kwargs)
             if type(result) == Success or type(result) == Fail:
