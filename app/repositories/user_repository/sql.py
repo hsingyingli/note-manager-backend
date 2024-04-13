@@ -8,7 +8,7 @@ create_user_query = """
 
 
 get_user_by_email_query = """
-    SELECT id, password
+    SELECT id, username, email, password
     FROM users 
     WHERE email = %s 
     LIMIT 1
