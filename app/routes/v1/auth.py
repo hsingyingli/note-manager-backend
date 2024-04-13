@@ -24,7 +24,15 @@ async def renew_access_token(
 
     payload = verify_token(note_app_refresh_token)
     if payload.is_failed:
-        return Response(status_code=status.HTTP_400_BAD_REQUEST)
+        response = Response(status_code=status.HTTP_400_BAD_REQUEST)
+        response.set_cookie(
+            key="note_app_refresh_token",
+            domain="127.0.0.1",
+            max_age=-1,
+            secure=True,
+            samesite="none",
+        )
+        return response
 
     async with db_pool.connection() as conn:
         async with conn.cursor() as cur:
@@ -37,5 +45,12 @@ async def renew_access_token(
     access_token, _ = create_token(payload.result.email, settings.access_token_duration)
 
     response = Response(status_code=status.HTTP_204_NO_CONTENT)
-    response.set_cookie(key="note_app_access_token", value=access_token)
+    response.set_cookie(
+        key="note_app_access_token",
+        value=access_token,
+        domain="127.0.0.1",
+        max_age=settings.access_token_duration,
+        secure=True,
+        samesite="none",
+    )
     return response
