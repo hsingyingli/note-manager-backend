@@ -110,7 +110,7 @@ async def login_user_route(
     response.set_cookie(
         key="note_app_access_token",
         value=access_token,
-        domain="127.0.0.1",
+        domain="localhost",
         max_age=settings.access_token_duration,
         secure=True,
         samesite="none",
@@ -118,7 +118,7 @@ async def login_user_route(
     response.set_cookie(
         key="note_app_refresh_token",
         value=refresh_token,
-        domain="127.0.0.1",
+        domain="localhost",
         max_age=settings.refresh_token_duration,
         secure=True,
         samesite="none",
@@ -151,14 +151,14 @@ async def logout_user(
     response = Response(status_code=status.HTTP_204_NO_CONTENT)
     response.set_cookie(
         key="note_app_access_token",
-        domain="127.0.0.1",
+        domain="localhost",
         max_age=-1,
         secure=True,
         samesite="none",
     )
     response.set_cookie(
         key="note_app_refresh_token",
-        domain="127.0.0.1",
+        domain="localhost",
         max_age=-1,
         secure=True,
         samesite="none",

@@ -18,7 +18,7 @@ new_migrate:
 		alembic revision -m "$$name"
 
 start_server:
-	uvicorn app:app --reload
+	uvicorn app:app --reload --host localhost
 
 ssl:
 	@read -p "Enter length: " len;\
